@@ -11,4 +11,4 @@ router.get('/api/list/:city/:page',(ctx)=>{
     ctx.body=list;
 });
 app.use(router.routes()).use(router.allowedMethods());
-app.listen(3000);
+app.listen(80);
