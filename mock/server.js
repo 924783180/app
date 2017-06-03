@@ -1,14 +1,25 @@
-let Koa=require('koa');
-let Router=require('koa-router');
-let app=new Koa;
-let router=new Router();
-let ad=require('./home/ad');
-router.get('/api/ad',(ctx)=>{
-    ctx.body=ad;
+let express = require('express');
+let path=require('path');
+let app = express();
+app.listen(3000);
+
+let content = require('./content/content');
+//广告的接口
+app.get('/api/content', (req,res)=>{
+    res.send(content);
 });
-let list=require('./home/list');
-router.get('/api/list/:city/:page',(ctx)=>{
-    ctx.body=list;
+let notice = require('./notice/notice');
+//广告的接口
+app.get('/api/notice', (req,res)=>{
+    res.send(notice);
 });
-app.use(router.routes()).use(router.allowedMethods());
-app.listen(80);
+app.post('/api/comment',(req,res)=>{
+    console.log(req.body);
+    res.send({msg:'ok'});
+});
+app.get('/', (req,res)=>{
+    res.sendFile(path.resolve('../dist/index.html'));
+});
+app.get('/bundle.js', (req,res)=>{
+    res.sendFile(path.resolve('../dist/bundle.js'));
+});

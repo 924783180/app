@@ -1,2 +1,0 @@
-//更改城市 UPDATE_CITY
-export const UPDATE_CITE='UPDATE_CITE';
