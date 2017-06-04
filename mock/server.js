@@ -17,6 +17,10 @@ app.post('/api/comment',(req,res)=>{
     console.log(req.body);
     res.send({msg:'ok'});
 });
+let js = require('./js/js');
+app.get('/api/js', (req,res)=>{
+    res.send(js);
+});
 app.get('/', (req,res)=>{
     res.sendFile(path.resolve('../dist/index.html'));
 });
