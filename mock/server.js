@@ -9,7 +9,7 @@ app.get('/api/notice', (req,res)=>{
 });
 let js = require('./js/js');
 app.get('/api/js/:hash?', (req,res)=>{
-    res.send(js);
+    res.sendFile(path.resolve('./js/js.json'));
 });
 let css = require('./css/css');
 app.get('/api/css/:hash?', (req,res)=>{
@@ -18,6 +18,10 @@ app.get('/api/css/:hash?', (req,res)=>{
 let content = js;
 app.get('/api/content', (req,res)=>{
     res.send(content);
+});
+let react = require('./react/react');
+app.get('/api/react', (req,res)=>{
+    res.send(react);
 });
 
 
