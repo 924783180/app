@@ -23,7 +23,9 @@ let react = require('./react/react');
 app.get('/api/react', (req,res)=>{
     res.send(react);
 });
-
+app.get('/images/favicon.ico', (req,res)=>{
+    res.sendFile(path.resolve('./images/favicon.ico'));
+});
 
 app.get('/', (req,res)=>{
     res.sendFile(path.resolve('../dist/index.html'));
