@@ -1,6 +1,11 @@
 let express = require('express');
 let path=require('path');
 let app = express();
+let bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended:true}));
+let Notice = require('./model').Notice;
+let find=(obj,cb)=>(Notice.find(obj,cb));
+let update=(conditions,obj,cb)=>(Notice.update(conditions,obj,cb));
 app.listen(3000);
 
 app.get('/api/notice', (req,res)=>{
