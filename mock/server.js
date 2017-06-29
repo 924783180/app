@@ -3,26 +3,85 @@ let path=require('path');
 let app = express();
 app.listen(3000);
 
-let notice = require('./notice/notice');
 app.get('/api/notice', (req,res)=>{
-    res.send(notice);
+    find({id:0},(err,doc)=>{
+        if(err){
+            res.send(err);
+        }else{
+            res.send(doc);
+        }
+    });
 });
-let js = require('./js/js');
 app.get('/api/js/:hash?', (req,res)=>{
-    res.sendFile(path.resolve('./js/js.json'));
+    find({type:'jsDetail'},(err,doc)=>{
+        if(err){
+            res.send(err);
+        }else{
+            res.send(doc);
+        }
+    });
 });
-let css = require('./css/css');
 app.get('/api/css/:hash?', (req,res)=>{
-    res.send(css);
+    find({type:'cssDetail'},(err,doc)=>{
+        if(err){
+            res.send(err);
+        }else{
+            res.send(doc);
+        }
+    });
 });
-let content = js;
 app.get('/api/content', (req,res)=>{
-    res.send(content);
+    find({},(err,doc)=>{
+        if(err){
+            res.send(err);
+        }else{
+            res.send(doc);
+        }
+    });
 });
-let react = require('./react/react');
+app.post('/api/click', (req,res)=>{
+    let body='',jsonStr;
+    req.on('data',(chunk)=>{
+        body+=chunk
+    });
+    req.on('end',()=>{
+        jsonStr=JSON.parse(body);
+        let id=jsonStr.id;
+        update({id:id},jsonStr,(err,doc)=>{
+            if(err){
+                res.send(err)
+            }
+        });
+    })
+});
 app.get('/api/react', (req,res)=>{
-    res.send(react);
+    find({type:'reactDetail'},(err,doc)=>{
+        if(err){
+            res.send(err);
+        }else{
+            res.send(doc);
+        }
+    });
 });
+app.get('/api/rank', (req,res)=>{
+    Notice.find({},null,{sort:{number:-1}},(err,doc)=>{
+        if(err){
+            res.send(err)
+        }else{
+            res.send(doc)
+        }
+    })
+});
+app.get('/api/recent', (req,res)=>{
+    Notice.find({},null,{sort:{id:-1}},(err,doc)=>{
+        if(err){
+            res.send(err)
+        }else{
+            res.send(doc)
+        }
+    })
+});
+
 app.get('/images/favicon.ico', (req,res)=>{
     res.sendFile(path.resolve('./images/favicon.ico'));
 });
