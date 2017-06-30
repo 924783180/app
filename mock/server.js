@@ -69,7 +69,7 @@ app.get('/api/react', (req,res)=>{
     });
 });
 app.get('/api/rank', (req,res)=>{
-    Notice.find({},null,{sort:{number:-1}},(err,doc)=>{
+    Notice.find({id:{$ne:0}},null,{sort:{number:-1},limit:10},(err,doc)=>{
         if(err){
             res.send(err)
         }else{
@@ -78,7 +78,7 @@ app.get('/api/rank', (req,res)=>{
     })
 });
 app.get('/api/recent', (req,res)=>{
-    Notice.find({},null,{sort:{id:-1}},(err,doc)=>{
+    Notice.find({id:{$ne:0}},null,{sort:{id:-1},limit:10},(err,doc)=>{
         if(err){
             res.send(err)
         }else{
